@@ -28,11 +28,10 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
         page: 1,
         onSuccess: (movieList) {
           emitState(SuccessGetDiscoverState(movieList));
-          isOnProcess = false;
         },
         onError: (message, movieList) {
           emitState(FailedGetDiscoverState(message, movieList));
-          isOnProcess = false;
         });
+    isOnProcess = false;
   }
 }
