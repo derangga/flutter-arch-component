@@ -1,6 +1,6 @@
 import 'package:moor_flutter/moor_flutter.dart';
-
 import 'database_module.dart';
+import '../../../domain/models/local/movie_table.dart';
 
 part 'movie_dao.g.dart';
 

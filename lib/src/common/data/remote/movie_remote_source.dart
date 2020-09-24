@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
-import 'base_repository.dart';
+import 'base_remote.dart';
 import 'config/api_url.dart';
 import 'config/result.dart';
 
-import '../../domain/movie_response.dart';
-import '../../domain/detail_movie_response.dart';
+import '../../domain/models/remote/movie_response.dart';
+import '../../domain/models/remote/detail_movie_response.dart';
 
-class MovieRemoteSource extends BaseRepository {
+class MovieRemoteSource extends BaseRemote {
   MovieRemoteSource(Dio dio) : super(dio);
 
   Future<Result<MovieResponse>> fetchDiscoverMovies(int page) async {

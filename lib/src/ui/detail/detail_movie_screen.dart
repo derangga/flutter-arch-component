@@ -5,7 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../base/base_stateful.dart';
 import '../../common/data/local/db/database_module.dart';
 import '../../common/data/remote/config/api_url.dart';
-import '../../common/domain/detail_movie_response.dart';
+import '../../common/domain/models/remote/detail_movie_response.dart';
 import '../../ui/detail/bloc/detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
@@ -25,9 +25,9 @@ class _DetailMovieScreenState
 
   @override
   Widget mapStateHandler(DetailMovieState state) {
-    if(state is SuccessGetDetailMovieState){
+    if (state is SuccessGetDetailMovieState) {
       return _detailMovieView(state.detailMovie);
-    } else if(state is FailedGetDetailMovieState){
+    } else if (state is FailedGetDetailMovieState) {
       return _errorText(state.message);
     } else {
       return _loadingView(context);

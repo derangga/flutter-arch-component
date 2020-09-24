@@ -24,7 +24,6 @@ class Movies {
   int voteCount;
   int id;
   String title;
-  double popularity;
   String posterPath;
   String backdropPath;
   String overview;
@@ -34,7 +33,6 @@ class Movies {
       {this.voteCount,
       this.id,
       this.title,
-      this.popularity,
       this.posterPath,
       this.backdropPath,
       this.overview,
@@ -44,7 +42,6 @@ class Movies {
     voteCount = json['vote_count'];
     id = json['id'];
     title = json['title'];
-    popularity = json['popularity'];
     posterPath = json['poster_path'];
     backdropPath = json['backdrop_path'];
     overview = json['overview'];

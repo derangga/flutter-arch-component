@@ -23,9 +23,7 @@ class _HomeScreenState extends BaseState<HomeBloc, HomeState, HomeScreen> {
 
   @override
   Widget mapStateHandler(HomeState state) {
-    if (state is LoadingState) {
-      return _loadingView(context);
-    } else if (state is SuccessGetDiscoverState && state.movieList.isNotEmpty) {
+    if (state is SuccessGetDiscoverState && state.movieList.isNotEmpty) {
       return _moviesCard(state.movieList);
     } else if (state is FailedGetDiscoverState) {
       if (state.movieList.isEmpty) {

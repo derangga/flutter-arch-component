@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'config/network_func.dart';
 import 'config/result.dart';
 
-abstract class BaseRepository {
+abstract class BaseRemote {
   final Dio _dio;
 
-  BaseRepository(this._dio);
+  BaseRemote(this._dio);
 
   Future<Result<T>> getMethod<T>(
     String endpoint, {

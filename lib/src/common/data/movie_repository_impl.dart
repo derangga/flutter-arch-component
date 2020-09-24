@@ -1,19 +1,23 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_arch_component/src/common/data/local/local_movie_repository.dart';
-import 'package:flutter_arch_component/src/common/data/remote/movie_remote_source.dart';
-import 'package:flutter_arch_component/src/common/domain/movie_response.dart';
 
 import 'local/db/database_module.dart';
 import 'remote/config/network_func.dart';
+import '../domain/models/remote/movie_response.dart';
+import '../../common/data/local/local_movie_repository.dart';
+import '../../common/data/remote/movie_remote_source.dart';
+import '../../common/domain/repository/movie_repository.dart';
 
-class MovieRepository {
+class MovieRepositoryImpl extends MovieRepository {
   final MovieRemoteSource _remoteSource;
   final MovieLocalSource _localSource;
 
-  MovieRepository(this._remoteSource, this._localSource);
+  MovieRepositoryImpl(this._remoteSource, this._localSource);
 
-  Future<void> singleSourceOfTruth({@required int page, Function(List<Movie> movieList) onSuccess,
-    Function(String message, List<Movie> movieList) onError}) async {
+  @override
+  Future<void> singleSourceOfTruth(
+      {@required int page,
+      Function(List<Movie> movieList) onSuccess,
+      Function(String message, List<Movie> movieList) onError}) async {
     var movies = await _localSource.getAllMovie();
     onSuccess(movies);
 
@@ -26,7 +30,6 @@ class MovieRepository {
             movieId: element.id,
             voteCount: element.voteCount,
             title: element.title,
-            popularity: element.popularity,
             posterPath: element.posterPath,
             backdropPath: element.backdropPath,
             overview: element.overview,

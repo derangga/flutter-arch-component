@@ -7,7 +7,7 @@ import '../ui/home/home_screen.dart';
 import '../ui/detail/bloc/detail_movie_bloc.dart';
 import '../common/data/remote/movie_remote_source.dart';
 import '../common/data/local/db/database_module.dart';
-import '../common/data/movie_repository.dart';
+import '../common/domain/repository/movie_repository.dart';
 import 'routing_constant.dart';
 import 'undefined_view.dart';
 

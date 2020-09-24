@@ -4,7 +4,7 @@ import '../../../base/bloc_event.dart';
 import '../../../base/bloc_state.dart';
 import '../../../base/base_bloc.dart';
 import '../../../common/data/local/db/database_module.dart';
-import '../../../common/data/movie_repository.dart';
+import '../../../common/domain/repository/movie_repository.dart';
 
 part 'home_state.dart';
 part 'home_event.dart';

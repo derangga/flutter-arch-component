@@ -12,7 +12,6 @@ class Movie extends DataClass implements Insertable<Movie> {
   final int movieId;
   final int voteCount;
   final String title;
-  final double popularity;
   final String posterPath;
   final String backdropPath;
   final String overview;
@@ -22,7 +21,6 @@ class Movie extends DataClass implements Insertable<Movie> {
       @required this.movieId,
       @required this.voteCount,
       @required this.title,
-      @required this.popularity,
       @required this.posterPath,
       @required this.backdropPath,
       @required this.overview,
@@ -32,7 +30,6 @@ class Movie extends DataClass implements Insertable<Movie> {
     final effectivePrefix = prefix ?? '';
     final intType = db.typeSystem.forDartType<int>();
     final stringType = db.typeSystem.forDartType<String>();
-    final doubleType = db.typeSystem.forDartType<double>();
     return Movie(
       id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
       movieId:
@@ -41,8 +38,6 @@ class Movie extends DataClass implements Insertable<Movie> {
           intType.mapFromDatabaseResponse(data['${effectivePrefix}vote_count']),
       title:
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
-      popularity: doubleType
-          .mapFromDatabaseResponse(data['${effectivePrefix}popularity']),
       posterPath: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}poster_path']),
       backdropPath: stringType
@@ -67,9 +62,6 @@ class Movie extends DataClass implements Insertable<Movie> {
     }
     if (!nullToAbsent || title != null) {
       map['title'] = Variable<String>(title);
-    }
-    if (!nullToAbsent || popularity != null) {
-      map['popularity'] = Variable<double>(popularity);
     }
     if (!nullToAbsent || posterPath != null) {
       map['poster_path'] = Variable<String>(posterPath);
@@ -97,9 +89,6 @@ class Movie extends DataClass implements Insertable<Movie> {
           : Value(voteCount),
       title:
           title == null && nullToAbsent ? const Value.absent() : Value(title),
-      popularity: popularity == null && nullToAbsent
-          ? const Value.absent()
-          : Value(popularity),
       posterPath: posterPath == null && nullToAbsent
           ? const Value.absent()
           : Value(posterPath),
@@ -123,7 +112,6 @@ class Movie extends DataClass implements Insertable<Movie> {
       movieId: serializer.fromJson<int>(json['movieId']),
       voteCount: serializer.fromJson<int>(json['voteCount']),
       title: serializer.fromJson<String>(json['title']),
-      popularity: serializer.fromJson<double>(json['popularity']),
       posterPath: serializer.fromJson<String>(json['posterPath']),
       backdropPath: serializer.fromJson<String>(json['backdropPath']),
       overview: serializer.fromJson<String>(json['overview']),
@@ -138,7 +126,6 @@ class Movie extends DataClass implements Insertable<Movie> {
       'movieId': serializer.toJson<int>(movieId),
       'voteCount': serializer.toJson<int>(voteCount),
       'title': serializer.toJson<String>(title),
-      'popularity': serializer.toJson<double>(popularity),
       'posterPath': serializer.toJson<String>(posterPath),
       'backdropPath': serializer.toJson<String>(backdropPath),
       'overview': serializer.toJson<String>(overview),
@@ -151,7 +138,6 @@ class Movie extends DataClass implements Insertable<Movie> {
           int movieId,
           int voteCount,
           String title,
-          double popularity,
           String posterPath,
           String backdropPath,
           String overview,
@@ -161,7 +147,6 @@ class Movie extends DataClass implements Insertable<Movie> {
         movieId: movieId ?? this.movieId,
         voteCount: voteCount ?? this.voteCount,
         title: title ?? this.title,
-        popularity: popularity ?? this.popularity,
         posterPath: posterPath ?? this.posterPath,
         backdropPath: backdropPath ?? this.backdropPath,
         overview: overview ?? this.overview,
@@ -174,7 +159,6 @@ class Movie extends DataClass implements Insertable<Movie> {
           ..write('movieId: $movieId, ')
           ..write('voteCount: $voteCount, ')
           ..write('title: $title, ')
-          ..write('popularity: $popularity, ')
           ..write('posterPath: $posterPath, ')
           ..write('backdropPath: $backdropPath, ')
           ..write('overview: $overview, ')
@@ -193,13 +177,9 @@ class Movie extends DataClass implements Insertable<Movie> {
               $mrjc(
                   title.hashCode,
                   $mrjc(
-                      popularity.hashCode,
-                      $mrjc(
-                          posterPath.hashCode,
-                          $mrjc(
-                              backdropPath.hashCode,
-                              $mrjc(overview.hashCode,
-                                  releaseDate.hashCode)))))))));
+                      posterPath.hashCode,
+                      $mrjc(backdropPath.hashCode,
+                          $mrjc(overview.hashCode, releaseDate.hashCode))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -208,7 +188,6 @@ class Movie extends DataClass implements Insertable<Movie> {
           other.movieId == this.movieId &&
           other.voteCount == this.voteCount &&
           other.title == this.title &&
-          other.popularity == this.popularity &&
           other.posterPath == this.posterPath &&
           other.backdropPath == this.backdropPath &&
           other.overview == this.overview &&
@@ -220,7 +199,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
   final Value<int> movieId;
   final Value<int> voteCount;
   final Value<String> title;
-  final Value<double> popularity;
   final Value<String> posterPath;
   final Value<String> backdropPath;
   final Value<String> overview;
@@ -230,7 +208,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
     this.movieId = const Value.absent(),
     this.voteCount = const Value.absent(),
     this.title = const Value.absent(),
-    this.popularity = const Value.absent(),
     this.posterPath = const Value.absent(),
     this.backdropPath = const Value.absent(),
     this.overview = const Value.absent(),
@@ -241,7 +218,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
     @required int movieId,
     @required int voteCount,
     @required String title,
-    @required double popularity,
     @required String posterPath,
     @required String backdropPath,
     @required String overview,
@@ -249,7 +225,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
   })  : movieId = Value(movieId),
         voteCount = Value(voteCount),
         title = Value(title),
-        popularity = Value(popularity),
         posterPath = Value(posterPath),
         backdropPath = Value(backdropPath),
         overview = Value(overview),
@@ -259,7 +234,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
     Expression<int> movieId,
     Expression<int> voteCount,
     Expression<String> title,
-    Expression<double> popularity,
     Expression<String> posterPath,
     Expression<String> backdropPath,
     Expression<String> overview,
@@ -270,7 +244,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
       if (movieId != null) 'movie_id': movieId,
       if (voteCount != null) 'vote_count': voteCount,
       if (title != null) 'title': title,
-      if (popularity != null) 'popularity': popularity,
       if (posterPath != null) 'poster_path': posterPath,
       if (backdropPath != null) 'backdrop_path': backdropPath,
       if (overview != null) 'overview': overview,
@@ -283,7 +256,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
       Value<int> movieId,
       Value<int> voteCount,
       Value<String> title,
-      Value<double> popularity,
       Value<String> posterPath,
       Value<String> backdropPath,
       Value<String> overview,
@@ -293,7 +265,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
       movieId: movieId ?? this.movieId,
       voteCount: voteCount ?? this.voteCount,
       title: title ?? this.title,
-      popularity: popularity ?? this.popularity,
       posterPath: posterPath ?? this.posterPath,
       backdropPath: backdropPath ?? this.backdropPath,
       overview: overview ?? this.overview,
@@ -315,9 +286,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
     }
     if (title.present) {
       map['title'] = Variable<String>(title.value);
-    }
-    if (popularity.present) {
-      map['popularity'] = Variable<double>(popularity.value);
     }
     if (posterPath.present) {
       map['poster_path'] = Variable<String>(posterPath.value);
@@ -341,7 +309,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
           ..write('movieId: $movieId, ')
           ..write('voteCount: $voteCount, ')
           ..write('title: $title, ')
-          ..write('popularity: $popularity, ')
           ..write('posterPath: $posterPath, ')
           ..write('backdropPath: $backdropPath, ')
           ..write('overview: $overview, ')
@@ -395,18 +362,6 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   GeneratedTextColumn _constructTitle() {
     return GeneratedTextColumn(
       'title',
-      $tableName,
-      false,
-    );
-  }
-
-  final VerificationMeta _popularityMeta = const VerificationMeta('popularity');
-  GeneratedRealColumn _popularity;
-  @override
-  GeneratedRealColumn get popularity => _popularity ??= _constructPopularity();
-  GeneratedRealColumn _constructPopularity() {
-    return GeneratedRealColumn(
-      'popularity',
       $tableName,
       false,
     );
@@ -470,7 +425,6 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
         movieId,
         voteCount,
         title,
-        popularity,
         posterPath,
         backdropPath,
         overview,
@@ -507,14 +461,6 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
           _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
-    }
-    if (data.containsKey('popularity')) {
-      context.handle(
-          _popularityMeta,
-          popularity.isAcceptableOrUnknown(
-              data['popularity'], _popularityMeta));
-    } else if (isInserting) {
-      context.missing(_popularityMeta);
     }
     if (data.containsKey('poster_path')) {
       context.handle(
