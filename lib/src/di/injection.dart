@@ -10,7 +10,7 @@ import '../common/data/local/local_movie_repository.dart';
 import '../common/data/movie_repository_impl.dart';
 import '../common/data/local/db/movie_dao.dart';
 
-List<SingleChildWidget> serviceLocator = [
+List<SingleChildWidget> appServices = [
   ...independentServices,
   ...dependentServices
 ];

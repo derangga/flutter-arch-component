@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'src/di/service_locator.dart';
+import 'src/di/injection.dart';
 import 'src/routing/router.dart';
 import 'src/routing/routing_constant.dart';
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: serviceLocator,
+      providers: appServices,
       child: MaterialApp(
         title: 'Flutter Clean Arch Demo',
         theme: ThemeData(

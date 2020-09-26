@@ -7,7 +7,7 @@ import '../../common/data/local/local_movie_repository.dart';
 import '../../common/data/remote/movie_remote_source.dart';
 import '../../common/domain/repository/movie_repository.dart';
 
-class MovieRepositoryImpl extends MovieRepository {
+class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteSource _remoteSource;
   final MovieLocalSource _localSource;
 
