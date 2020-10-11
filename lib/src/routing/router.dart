@@ -11,7 +11,7 @@ import '../common/domain/repository/movie_repository.dart';
 import 'routing_constant.dart';
 import 'undefined_view.dart';
 
-class Router {
+class RoutingApp {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routing.ROOT:
