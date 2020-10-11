@@ -1,6 +1,5 @@
-import 'package:flutter_arch_component/src/common/data/local/db/movie_dao.dart';
-
 import 'db/database_module.dart';
+import 'db/movie_dao.dart';
 
 class MovieLocalSource {
   final MoviesDao _moviesDao;

@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_arch_component/src/base/bloc_event.dart';
-import 'package:flutter_arch_component/src/base/bloc_state.dart';
+
+import 'bloc_event.dart';
+import 'bloc_state.dart';
 
 abstract class BaseBloc<Event extends BlocEvent, State extends BlocState> {
   // Attach mapEventToState

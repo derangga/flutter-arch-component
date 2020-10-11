@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
-import 'local/db/database_module.dart';
-import 'remote/config/network_func.dart';
+import '../data/remote/movie_remote_source.dart';
 import '../domain/models/remote/movie_response.dart';
-import '../../common/data/local/local_movie_repository.dart';
-import '../../common/data/remote/movie_remote_source.dart';
-import '../../common/domain/repository/movie_repository.dart';
+import '../domain/repository/movie_repository.dart';
+import 'local/db/database_module.dart';
+import 'local/local_movie_repository.dart';
+import 'remote/config/network_func.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteSource _remoteSource;

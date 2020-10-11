@@ -1,14 +1,14 @@
+import 'package:common/data/local/db/database_module.dart';
+import 'package:common/data/local/db/movie_dao.dart';
+import 'package:common/data/local/local_movie_repository.dart';
+import 'package:common/data/movie_repository_impl.dart';
+import 'package:common/data/remote/config/dio_module.dart';
+import 'package:common/data/remote/movie_remote_source.dart';
+import 'package:common/domain/repository/movie_repository.dart';
 import 'package:dio/dio.dart';
 
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
-import '../common/data/remote/config/dio_module.dart';
-import '../common/data/remote/movie_remote_source.dart';
-import '../common/data/local/db/database_module.dart';
-import '../common/domain/repository/movie_repository.dart';
-import '../common/data/local/local_movie_repository.dart';
-import '../common/data/movie_repository_impl.dart';
-import '../common/data/local/db/movie_dao.dart';
 
 List<SingleChildWidget> appServices = [
   ...independentServices,

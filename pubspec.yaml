@@ -23,12 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  moor_flutter: ^3.1.0
   provider: ^4.3.2+2
-  dio: ^3.0.10
   shimmer: ^1.1.1
-  fluttertoast: ^7.1.1
   cached_network_image: ^2.3.2+1
+  core:
+    path: core
+  common:
+    path: common
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -37,8 +38,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner:
-  moor_generator: ^3.3.1
 
 # dependency_overrides:
 #   analyzer: '0.39.14'

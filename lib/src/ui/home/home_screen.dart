@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:common/data/local/db/database_module.dart';
+import 'package:common/data/remote/config/api_url.dart';
+import 'package:core/base/base_stateful.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_arch_component/src/routing/routing_constant.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'bloc/home_bloc.dart';
-import '../../base/base_stateful.dart';
-import '../../common/data/remote/config/api_url.dart';
-import '../../common/data/local/db/database_module.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

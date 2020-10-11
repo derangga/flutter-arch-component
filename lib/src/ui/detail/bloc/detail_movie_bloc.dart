@@ -1,10 +1,10 @@
+import 'package:common/data/remote/config/network_func.dart';
+import 'package:common/data/remote/movie_remote_source.dart';
+import 'package:common/domain/models/remote/detail_movie_response.dart';
+import 'package:core/base/base_bloc.dart';
+import 'package:core/base/bloc_event.dart';
+import 'package:core/base/bloc_state.dart';
 import 'package:flutter/foundation.dart';
-import '../../../base/base_bloc.dart';
-import '../../../base/bloc_event.dart';
-import '../../../base/bloc_state.dart';
-import '../../../common/domain/models/remote/detail_movie_response.dart';
-import '../../../common/data/remote/config/network_func.dart';
-import '../../../common/data/remote/movie_remote_source.dart';
 
 part 'detail_movie_event.dart';
 part 'detail_movie_state.dart';

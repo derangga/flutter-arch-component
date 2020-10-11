@@ -1,11 +1,11 @@
+import 'package:common/data/local/db/database_module.dart';
+import 'package:common/data/remote/config/api_url.dart';
+import 'package:common/domain/models/remote/detail_movie_response.dart';
+import 'package:core/base/base_stateful.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../base/base_stateful.dart';
-import '../../common/data/local/db/database_module.dart';
-import '../../common/data/remote/config/api_url.dart';
-import '../../common/domain/models/remote/detail_movie_response.dart';
 import '../../ui/detail/bloc/detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {

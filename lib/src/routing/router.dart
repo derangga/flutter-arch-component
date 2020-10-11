@@ -1,17 +1,17 @@
+import 'package:common/data/local/db/database_module.dart';
+import 'package:common/data/remote/movie_remote_source.dart';
+import 'package:common/domain/repository/movie_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:core/widget/undefined_view.dart';
 
 import '../ui/detail/detail_movie_screen.dart';
 import '../ui/home/bloc/home_bloc.dart';
 import '../ui/home/home_screen.dart';
 import '../ui/detail/bloc/detail_movie_bloc.dart';
-import '../common/data/remote/movie_remote_source.dart';
-import '../common/data/local/db/database_module.dart';
-import '../common/domain/repository/movie_repository.dart';
 import 'routing_constant.dart';
-import 'undefined_view.dart';
 
-class Router {
+class RoutingApp {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routing.ROOT:

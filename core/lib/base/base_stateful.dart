@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_arch_component/src/base/bloc_state.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'base_bloc.dart';
+import 'bloc_state.dart';
 
 abstract class BaseState<B extends BaseBloc, BS extends BlocState,
     S extends StatefulWidget> extends State<S> {

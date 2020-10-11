@@ -1,10 +1,9 @@
+import 'package:common/data/local/db/database_module.dart';
+import 'package:common/domain/repository/movie_repository.dart';
+import 'package:core/base/base_bloc.dart';
+import 'package:core/base/bloc_event.dart';
+import 'package:core/base/bloc_state.dart';
 import 'package:flutter/foundation.dart';
-
-import '../../../base/bloc_event.dart';
-import '../../../base/bloc_state.dart';
-import '../../../base/base_bloc.dart';
-import '../../../common/data/local/db/database_module.dart';
-import '../../../common/domain/repository/movie_repository.dart';
 
 part 'home_state.dart';
 part 'home_event.dart';
