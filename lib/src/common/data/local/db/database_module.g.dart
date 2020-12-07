@@ -17,7 +17,7 @@ class Movie extends DataClass implements Insertable<Movie> {
   final String overview;
   final String releaseDate;
   Movie(
-      {this.id,
+      {@required this.id,
       @required this.movieId,
       @required this.voteCount,
       @required this.title,

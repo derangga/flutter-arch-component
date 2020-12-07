@@ -10,13 +10,13 @@ abstract class BaseState<B extends BaseBloc, BS extends BlocState,
     S extends StatefulWidget> extends State<S> {
   B bloc;
 
-  void initBloc();
+  B initBloc();
   Widget mapStateHandler(BS state);
 
   @override
-  void didChangeDependencies() {
-    initBloc();
-    super.didChangeDependencies();
+  void initState() {
+    bloc = initBloc();
+    super.initState();
   }
 
   @override

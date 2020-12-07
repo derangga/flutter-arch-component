@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../base/base_stateful.dart';
@@ -18,8 +18,13 @@ class DetailMovieScreen extends StatefulWidget {
 class _DetailMovieScreenState
     extends BaseState<DetailMovieBloc, DetailMovieState, DetailMovieScreen> {
   @override
-  void initBloc() {
-    bloc = Provider.of<DetailMovieBloc>(context);
+  DetailMovieBloc initBloc() {
+    return KiwiContainer().resolve<DetailMovieBloc>();
+  }
+
+  @override
+  void initState(){
+    super.initState();
     bloc.pushEvent(GetDetailMovieEvent(widget.movie.movieId));
   }
 

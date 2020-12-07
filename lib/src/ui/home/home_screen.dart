@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_arch_component/src/routing/routing_constant.dart';
-import 'package:provider/provider.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'bloc/home_bloc.dart';
@@ -15,9 +15,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends BaseState<HomeBloc, HomeState, HomeScreen> {
+
   @override
-  void initBloc() {
-    bloc = Provider.of<HomeBloc>(context);
+  HomeBloc initBloc() {
+    return KiwiContainer().resolve<HomeBloc>();
+  }
+
+  @override
+  void initState() {
+    super.initState();
     bloc.pushEvent(GetDiscoverMovieEvent());
   }
 

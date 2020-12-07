@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   moor_flutter: ^3.1.0
-  provider: ^4.3.2+2
+  kiwi: ^2.1.1
   dio: ^3.0.10
   shimmer: ^1.1.1
   fluttertoast: ^7.1.1
@@ -37,8 +37,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner:
   moor_generator: ^3.3.1
+  build_runner: ^1.10.0
+  kiwi_generator: ^2.1.1
 
 # dependency_overrides:
 #   analyzer: '0.39.14'

@@ -9,7 +9,7 @@ An example Flutter clean architecture component based on [Android Architecture C
 # Package
 - [Dio](https://pub.dev/packages/dio) for network services.
 - [Moor](https://pub.dev/packages/moor) for persistance data.
-- [Provider](https://pub.dev/packages/provider) for dependency injection
+- [Kiwi](https://pub.dev/packages/kiwi) for dependency injection
 - [BLoC from Scratch](https://www.youtube.com/watch?v=oxeYeMHVLII&ab_channel=ResoCoder)
 
 # Branch
