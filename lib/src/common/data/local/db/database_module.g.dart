@@ -8,7 +8,6 @@ part of 'database_module.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps, unnecessary_this
 class Movie extends DataClass implements Insertable<Movie> {
-  final int id;
   final int movieId;
   final int voteCount;
   final String title;
@@ -17,98 +16,62 @@ class Movie extends DataClass implements Insertable<Movie> {
   final String overview;
   final String releaseDate;
   Movie(
-      {@required this.id,
-      @required this.movieId,
-      @required this.voteCount,
-      @required this.title,
-      @required this.posterPath,
-      @required this.backdropPath,
-      @required this.overview,
-      @required this.releaseDate});
+      {required this.movieId,
+      required this.voteCount,
+      required this.title,
+      required this.posterPath,
+      required this.backdropPath,
+      required this.overview,
+      required this.releaseDate});
   factory Movie.fromData(Map<String, dynamic> data, GeneratedDatabase db,
-      {String prefix}) {
+      {String? prefix}) {
     final effectivePrefix = prefix ?? '';
-    final intType = db.typeSystem.forDartType<int>();
-    final stringType = db.typeSystem.forDartType<String>();
     return Movie(
-      id: intType.mapFromDatabaseResponse(data['${effectivePrefix}id']),
-      movieId:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}movie_id']),
-      voteCount:
-          intType.mapFromDatabaseResponse(data['${effectivePrefix}vote_count']),
-      title:
-          stringType.mapFromDatabaseResponse(data['${effectivePrefix}title']),
-      posterPath: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}poster_path']),
-      backdropPath: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}backdrop_path']),
-      overview: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}overview']),
-      releaseDate: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}release_date']),
+      movieId: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}movie_id'])!,
+      voteCount: const IntType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}vote_count'])!,
+      title: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
+      posterPath: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}poster_path'])!,
+      backdropPath: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}backdrop_path'])!,
+      overview: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}overview'])!,
+      releaseDate: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}release_date'])!,
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || id != null) {
-      map['id'] = Variable<int>(id);
-    }
-    if (!nullToAbsent || movieId != null) {
-      map['movie_id'] = Variable<int>(movieId);
-    }
-    if (!nullToAbsent || voteCount != null) {
-      map['vote_count'] = Variable<int>(voteCount);
-    }
-    if (!nullToAbsent || title != null) {
-      map['title'] = Variable<String>(title);
-    }
-    if (!nullToAbsent || posterPath != null) {
-      map['poster_path'] = Variable<String>(posterPath);
-    }
-    if (!nullToAbsent || backdropPath != null) {
-      map['backdrop_path'] = Variable<String>(backdropPath);
-    }
-    if (!nullToAbsent || overview != null) {
-      map['overview'] = Variable<String>(overview);
-    }
-    if (!nullToAbsent || releaseDate != null) {
-      map['release_date'] = Variable<String>(releaseDate);
-    }
+    map['movie_id'] = Variable<int>(movieId);
+    map['vote_count'] = Variable<int>(voteCount);
+    map['title'] = Variable<String>(title);
+    map['poster_path'] = Variable<String>(posterPath);
+    map['backdrop_path'] = Variable<String>(backdropPath);
+    map['overview'] = Variable<String>(overview);
+    map['release_date'] = Variable<String>(releaseDate);
     return map;
   }
 
   MoviesCompanion toCompanion(bool nullToAbsent) {
     return MoviesCompanion(
-      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
-      movieId: movieId == null && nullToAbsent
-          ? const Value.absent()
-          : Value(movieId),
-      voteCount: voteCount == null && nullToAbsent
-          ? const Value.absent()
-          : Value(voteCount),
-      title:
-          title == null && nullToAbsent ? const Value.absent() : Value(title),
-      posterPath: posterPath == null && nullToAbsent
-          ? const Value.absent()
-          : Value(posterPath),
-      backdropPath: backdropPath == null && nullToAbsent
-          ? const Value.absent()
-          : Value(backdropPath),
-      overview: overview == null && nullToAbsent
-          ? const Value.absent()
-          : Value(overview),
-      releaseDate: releaseDate == null && nullToAbsent
-          ? const Value.absent()
-          : Value(releaseDate),
+      movieId: Value(movieId),
+      voteCount: Value(voteCount),
+      title: Value(title),
+      posterPath: Value(posterPath),
+      backdropPath: Value(backdropPath),
+      overview: Value(overview),
+      releaseDate: Value(releaseDate),
     );
   }
 
   factory Movie.fromJson(Map<String, dynamic> json,
-      {ValueSerializer serializer}) {
+      {ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Movie(
-      id: serializer.fromJson<int>(json['id']),
       movieId: serializer.fromJson<int>(json['movieId']),
       voteCount: serializer.fromJson<int>(json['voteCount']),
       title: serializer.fromJson<String>(json['title']),
@@ -119,10 +82,9 @@ class Movie extends DataClass implements Insertable<Movie> {
     );
   }
   @override
-  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
       'movieId': serializer.toJson<int>(movieId),
       'voteCount': serializer.toJson<int>(voteCount),
       'title': serializer.toJson<String>(title),
@@ -134,16 +96,14 @@ class Movie extends DataClass implements Insertable<Movie> {
   }
 
   Movie copyWith(
-          {int id,
-          int movieId,
-          int voteCount,
-          String title,
-          String posterPath,
-          String backdropPath,
-          String overview,
-          String releaseDate}) =>
+          {int? movieId,
+          int? voteCount,
+          String? title,
+          String? posterPath,
+          String? backdropPath,
+          String? overview,
+          String? releaseDate}) =>
       Movie(
-        id: id ?? this.id,
         movieId: movieId ?? this.movieId,
         voteCount: voteCount ?? this.voteCount,
         title: title ?? this.title,
@@ -155,7 +115,6 @@ class Movie extends DataClass implements Insertable<Movie> {
   @override
   String toString() {
     return (StringBuffer('Movie(')
-          ..write('id: $id, ')
           ..write('movieId: $movieId, ')
           ..write('voteCount: $voteCount, ')
           ..write('title: $title, ')
@@ -169,22 +128,19 @@ class Movie extends DataClass implements Insertable<Movie> {
 
   @override
   int get hashCode => $mrjf($mrjc(
-      id.hashCode,
+      movieId.hashCode,
       $mrjc(
-          movieId.hashCode,
+          voteCount.hashCode,
           $mrjc(
-              voteCount.hashCode,
+              title.hashCode,
               $mrjc(
-                  title.hashCode,
-                  $mrjc(
-                      posterPath.hashCode,
-                      $mrjc(backdropPath.hashCode,
-                          $mrjc(overview.hashCode, releaseDate.hashCode))))))));
+                  posterPath.hashCode,
+                  $mrjc(backdropPath.hashCode,
+                      $mrjc(overview.hashCode, releaseDate.hashCode)))))));
   @override
-  bool operator ==(dynamic other) =>
+  bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Movie &&
-          other.id == this.id &&
           other.movieId == this.movieId &&
           other.voteCount == this.voteCount &&
           other.title == this.title &&
@@ -195,7 +151,6 @@ class Movie extends DataClass implements Insertable<Movie> {
 }
 
 class MoviesCompanion extends UpdateCompanion<Movie> {
-  final Value<int> id;
   final Value<int> movieId;
   final Value<int> voteCount;
   final Value<String> title;
@@ -204,7 +159,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
   final Value<String> overview;
   final Value<String> releaseDate;
   const MoviesCompanion({
-    this.id = const Value.absent(),
     this.movieId = const Value.absent(),
     this.voteCount = const Value.absent(),
     this.title = const Value.absent(),
@@ -214,14 +168,13 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
     this.releaseDate = const Value.absent(),
   });
   MoviesCompanion.insert({
-    this.id = const Value.absent(),
-    @required int movieId,
-    @required int voteCount,
-    @required String title,
-    @required String posterPath,
-    @required String backdropPath,
-    @required String overview,
-    @required String releaseDate,
+    required int movieId,
+    required int voteCount,
+    required String title,
+    required String posterPath,
+    required String backdropPath,
+    required String overview,
+    required String releaseDate,
   })  : movieId = Value(movieId),
         voteCount = Value(voteCount),
         title = Value(title),
@@ -230,17 +183,15 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
         overview = Value(overview),
         releaseDate = Value(releaseDate);
   static Insertable<Movie> custom({
-    Expression<int> id,
-    Expression<int> movieId,
-    Expression<int> voteCount,
-    Expression<String> title,
-    Expression<String> posterPath,
-    Expression<String> backdropPath,
-    Expression<String> overview,
-    Expression<String> releaseDate,
+    Expression<int>? movieId,
+    Expression<int>? voteCount,
+    Expression<String>? title,
+    Expression<String>? posterPath,
+    Expression<String>? backdropPath,
+    Expression<String>? overview,
+    Expression<String>? releaseDate,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
       if (movieId != null) 'movie_id': movieId,
       if (voteCount != null) 'vote_count': voteCount,
       if (title != null) 'title': title,
@@ -252,16 +203,14 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
   }
 
   MoviesCompanion copyWith(
-      {Value<int> id,
-      Value<int> movieId,
-      Value<int> voteCount,
-      Value<String> title,
-      Value<String> posterPath,
-      Value<String> backdropPath,
-      Value<String> overview,
-      Value<String> releaseDate}) {
+      {Value<int>? movieId,
+      Value<int>? voteCount,
+      Value<String>? title,
+      Value<String>? posterPath,
+      Value<String>? backdropPath,
+      Value<String>? overview,
+      Value<String>? releaseDate}) {
     return MoviesCompanion(
-      id: id ?? this.id,
       movieId: movieId ?? this.movieId,
       voteCount: voteCount ?? this.voteCount,
       title: title ?? this.title,
@@ -275,9 +224,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
     if (movieId.present) {
       map['movie_id'] = Variable<int>(movieId.value);
     }
@@ -305,7 +251,6 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
   @override
   String toString() {
     return (StringBuffer('MoviesCompanion(')
-          ..write('id: $id, ')
           ..write('movieId: $movieId, ')
           ..write('voteCount: $voteCount, ')
           ..write('title: $title, ')
@@ -320,21 +265,11 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
 
 class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   final GeneratedDatabase _db;
-  final String _alias;
+  final String? _alias;
   $MoviesTable(this._db, [this._alias]);
-  final VerificationMeta _idMeta = const VerificationMeta('id');
-  GeneratedIntColumn _id;
-  @override
-  GeneratedIntColumn get id => _id ??= _constructId();
-  GeneratedIntColumn _constructId() {
-    return GeneratedIntColumn('id', $tableName, false,
-        hasAutoIncrement: true, declaredAsPrimaryKey: true);
-  }
-
   final VerificationMeta _movieIdMeta = const VerificationMeta('movieId');
-  GeneratedIntColumn _movieId;
   @override
-  GeneratedIntColumn get movieId => _movieId ??= _constructMovieId();
+  late final GeneratedIntColumn movieId = _constructMovieId();
   GeneratedIntColumn _constructMovieId() {
     return GeneratedIntColumn(
       'movie_id',
@@ -344,9 +279,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   }
 
   final VerificationMeta _voteCountMeta = const VerificationMeta('voteCount');
-  GeneratedIntColumn _voteCount;
   @override
-  GeneratedIntColumn get voteCount => _voteCount ??= _constructVoteCount();
+  late final GeneratedIntColumn voteCount = _constructVoteCount();
   GeneratedIntColumn _constructVoteCount() {
     return GeneratedIntColumn(
       'vote_count',
@@ -356,9 +290,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   }
 
   final VerificationMeta _titleMeta = const VerificationMeta('title');
-  GeneratedTextColumn _title;
   @override
-  GeneratedTextColumn get title => _title ??= _constructTitle();
+  late final GeneratedTextColumn title = _constructTitle();
   GeneratedTextColumn _constructTitle() {
     return GeneratedTextColumn(
       'title',
@@ -368,9 +301,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   }
 
   final VerificationMeta _posterPathMeta = const VerificationMeta('posterPath');
-  GeneratedTextColumn _posterPath;
   @override
-  GeneratedTextColumn get posterPath => _posterPath ??= _constructPosterPath();
+  late final GeneratedTextColumn posterPath = _constructPosterPath();
   GeneratedTextColumn _constructPosterPath() {
     return GeneratedTextColumn(
       'poster_path',
@@ -381,10 +313,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
 
   final VerificationMeta _backdropPathMeta =
       const VerificationMeta('backdropPath');
-  GeneratedTextColumn _backdropPath;
   @override
-  GeneratedTextColumn get backdropPath =>
-      _backdropPath ??= _constructBackdropPath();
+  late final GeneratedTextColumn backdropPath = _constructBackdropPath();
   GeneratedTextColumn _constructBackdropPath() {
     return GeneratedTextColumn(
       'backdrop_path',
@@ -394,9 +324,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   }
 
   final VerificationMeta _overviewMeta = const VerificationMeta('overview');
-  GeneratedTextColumn _overview;
   @override
-  GeneratedTextColumn get overview => _overview ??= _constructOverview();
+  late final GeneratedTextColumn overview = _constructOverview();
   GeneratedTextColumn _constructOverview() {
     return GeneratedTextColumn(
       'overview',
@@ -407,10 +336,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
 
   final VerificationMeta _releaseDateMeta =
       const VerificationMeta('releaseDate');
-  GeneratedTextColumn _releaseDate;
   @override
-  GeneratedTextColumn get releaseDate =>
-      _releaseDate ??= _constructReleaseDate();
+  late final GeneratedTextColumn releaseDate = _constructReleaseDate();
   GeneratedTextColumn _constructReleaseDate() {
     return GeneratedTextColumn(
       'release_date',
@@ -421,7 +348,6 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
 
   @override
   List<GeneratedColumn> get $columns => [
-        id,
         movieId,
         voteCount,
         title,
@@ -441,24 +367,21 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id'], _idMeta));
-    }
     if (data.containsKey('movie_id')) {
       context.handle(_movieIdMeta,
-          movieId.isAcceptableOrUnknown(data['movie_id'], _movieIdMeta));
+          movieId.isAcceptableOrUnknown(data['movie_id']!, _movieIdMeta));
     } else if (isInserting) {
       context.missing(_movieIdMeta);
     }
     if (data.containsKey('vote_count')) {
       context.handle(_voteCountMeta,
-          voteCount.isAcceptableOrUnknown(data['vote_count'], _voteCountMeta));
+          voteCount.isAcceptableOrUnknown(data['vote_count']!, _voteCountMeta));
     } else if (isInserting) {
       context.missing(_voteCountMeta);
     }
     if (data.containsKey('title')) {
       context.handle(
-          _titleMeta, title.isAcceptableOrUnknown(data['title'], _titleMeta));
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
@@ -466,7 +389,7 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
       context.handle(
           _posterPathMeta,
           posterPath.isAcceptableOrUnknown(
-              data['poster_path'], _posterPathMeta));
+              data['poster_path']!, _posterPathMeta));
     } else if (isInserting) {
       context.missing(_posterPathMeta);
     }
@@ -474,13 +397,13 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
       context.handle(
           _backdropPathMeta,
           backdropPath.isAcceptableOrUnknown(
-              data['backdrop_path'], _backdropPathMeta));
+              data['backdrop_path']!, _backdropPathMeta));
     } else if (isInserting) {
       context.missing(_backdropPathMeta);
     }
     if (data.containsKey('overview')) {
       context.handle(_overviewMeta,
-          overview.isAcceptableOrUnknown(data['overview'], _overviewMeta));
+          overview.isAcceptableOrUnknown(data['overview']!, _overviewMeta));
     } else if (isInserting) {
       context.missing(_overviewMeta);
     }
@@ -488,7 +411,7 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
       context.handle(
           _releaseDateMeta,
           releaseDate.isAcceptableOrUnknown(
-              data['release_date'], _releaseDateMeta));
+              data['release_date']!, _releaseDateMeta));
     } else if (isInserting) {
       context.missing(_releaseDateMeta);
     }
@@ -496,11 +419,11 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {id};
+  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
   @override
-  Movie map(Map<String, dynamic> data, {String tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
-    return Movie.fromData(data, _db, prefix: effectivePrefix);
+  Movie map(Map<String, dynamic> data, {String? tablePrefix}) {
+    return Movie.fromData(data, _db,
+        prefix: tablePrefix != null ? '$tablePrefix.' : null);
   }
 
   @override
@@ -511,10 +434,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
-  $MoviesTable _movies;
-  $MoviesTable get movies => _movies ??= $MoviesTable(this);
-  MoviesDao _moviesDao;
-  MoviesDao get moviesDao => _moviesDao ??= MoviesDao(this as AppDatabase);
+  late final $MoviesTable movies = $MoviesTable(this);
+  late final MoviesDao moviesDao = MoviesDao(this as AppDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override

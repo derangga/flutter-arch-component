@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiwi/kiwi.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../base/base_stateful.dart';
@@ -9,23 +9,20 @@ import '../../common/domain/models/remote/detail_movie_response.dart';
 import '../../ui/detail/bloc/detail_movie_bloc.dart';
 
 class DetailMovieScreen extends StatefulWidget {
-  final Movie movie;
+  late final Movie movie;
+
   DetailMovieScreen(this.movie);
+
   @override
   _DetailMovieScreenState createState() => _DetailMovieScreenState();
 }
 
 class _DetailMovieScreenState
     extends BaseState<DetailMovieBloc, DetailMovieState, DetailMovieScreen> {
-  @override
-  DetailMovieBloc initBloc() {
-    return KiwiContainer().resolve<DetailMovieBloc>();
-  }
 
   @override
-  void initState(){
-    super.initState();
-    bloc.pushEvent(GetDetailMovieEvent(widget.movie.movieId));
+  void setupOnInitState() {
+    bloc.add(GetDetailMovieEvent(widget.movie.movieId));
   }
 
   @override
@@ -42,13 +39,12 @@ class _DetailMovieScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.movie.title),
-      ),
-      body: StreamBuilder<DetailMovieState>(
-          initialData: LoadingViewState(),
-          stream: bloc.stateStream,
-          builder: (blocCtx, snapshot) => mapStateHandler(snapshot.data)),
+        appBar: AppBar(
+          title: Text(widget.movie.title),
+        ),
+        body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
+          builder: (context, state) => mapStateHandler(state),
+        ),
     );
   }
 
@@ -59,8 +55,8 @@ class _DetailMovieScreenState
       width: size.width,
       padding: EdgeInsets.only(top: 12, left: 12, right: 12),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100],
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
         child: Column(
           children: [
             Container(
@@ -96,7 +92,7 @@ class _DetailMovieScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  movie.title,
+                  movie.title!,
                   style: TextStyle(
                     color: Colors.blue,
                     fontSize: 16.0,
@@ -104,7 +100,7 @@ class _DetailMovieScreenState
                   ),
                 ),
                 SizedBox(height: 12),
-                Text(movie.overview),
+                Text(movie.overview!),
                 SizedBox(height: 12),
                 Text('Date Release: ${movie.releaseDate}')
               ],

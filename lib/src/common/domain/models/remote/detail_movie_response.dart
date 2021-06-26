@@ -1,12 +1,12 @@
 class DetailMovieResponse {
-  String backdropPath;
-  String title;
-  String overview;
-  String posterPath;
-  String releaseDate;
-  String status;
-  double voteAverage;
-  int voteCount;
+  String? backdropPath;
+  String? title;
+  String? overview;
+  String? posterPath;
+  String? releaseDate;
+  String? status;
+  double? voteAverage;
+  int? voteCount;
 
   DetailMovieResponse(
       {this.backdropPath,

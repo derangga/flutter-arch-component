@@ -2,10 +2,9 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 import 'api_url.dart';
-import 'logging_interceptor.dart';
 
 class DioModule with DioMixin implements Dio {
-  DioModule() {
+  DioModule(Interceptor loggingInterceptor, DefaultHttpClientAdapter adapter) {
     options = BaseOptions(
       baseUrl: ApiUrl.BASE_URL,
       contentType: 'application/json',
@@ -15,7 +14,7 @@ class DioModule with DioMixin implements Dio {
     );
 
     this.options = options;
-    interceptors.add(LoggingInterceptor());
-    httpClientAdapter = DefaultHttpClientAdapter();
+    interceptors.add(loggingInterceptor);
+    httpClientAdapter = adapter;
   }
 }

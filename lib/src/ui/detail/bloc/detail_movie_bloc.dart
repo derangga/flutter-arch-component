@@ -3,31 +3,28 @@ import '../../../base/base_bloc.dart';
 import '../../../base/bloc_event.dart';
 import '../../../base/bloc_state.dart';
 import '../../../common/domain/models/remote/detail_movie_response.dart';
-import '../../../common/data/remote/config/network_func.dart';
-import '../../../common/data/remote/movie_remote_source.dart';
+import '../../../common/data/remote/remote_data_source.dart';
+import '../../../utils/extension.dart';
 
 part 'detail_movie_event.dart';
+
 part 'detail_movie_state.dart';
 
 class DetailMovieBloc extends BaseBloc<DetailMovieEvent, DetailMovieState> {
-  final MovieRemoteSource _remoteSource;
+  late final RemoteDataSource _remoteSource;
 
-  DetailMovieBloc(this._remoteSource);
+  DetailMovieBloc(this._remoteSource) : super(LoadingViewState());
 
   @override
-  void mapEventToState(DetailMovieEvent event) {
+  Stream<DetailMovieState> mapEventToState(DetailMovieEvent event) async* {
     if (event is GetDetailMovieEvent) {
-      _getDetailMovie(event.movieId);
+      yield LoadingViewState();
+      final result = await _remoteSource.fetchDetailMovies(event.movieId.orZero());
+      yield* result.fold((failure) async* {
+        yield FailedGetDetailMovieState("Error ${failure.code} ==> ${failure.errorBody}");
+      }, (success) async* {
+        yield SuccessGetDetailMovieState(success);
+      });
     }
-  }
-
-  void _getDetailMovie(int movieId) async {
-    final result = await _remoteSource.fetchDetailMovies(movieId);
-
-    responseHandler<DetailMovieResponse>(result, onSuccess: (response) {
-      emitState(SuccessGetDetailMovieState(response));
-    }, onError: (dioError, code, errorBody) {
-      emitState(FailedGetDetailMovieState("Error $code ==> $errorBody"));
-    });
   }
 }

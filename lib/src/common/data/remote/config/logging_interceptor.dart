@@ -1,42 +1,38 @@
-import 'dart:async';
-
 import 'package:dio/dio.dart';
 
 class LoggingInterceptor extends Interceptor {
   @override
-  Future<FutureOr> onRequest(RequestOptions options) async {
+  void onError(DioError err, ErrorInterceptorHandler handler) {
     print(
-        "--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"" + (options.path ?? "")}");
+        "<-- ${err.message} ${(err.response?.requestOptions != null ? (err.response!.requestOptions.path) : 'URL')}");
+    print("${err.response != null ? err.response!.data : 'Unknown Error'}");
+    print("<-- End error");
+    return super.onError(err, handler);
+  }
+
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    print("--> ${options.method.toUpperCase()} ${"" + (options.path)}");
 
     print("Headers:");
     options.headers.forEach((k, v) => print('$k: $v'));
 
-    if (options.queryParameters != null) {
-      print("queryParameters:");
-      options.queryParameters.forEach((k, v) => print('$k: $v'));
-    }
+    print("queryParameters:");
+    options.queryParameters.forEach((k, v) => print('$k: $v'));
+
     if (options.data != null) {
       print("Body: ${options.data}");
     }
-    return options;
+    return super.onRequest(options, handler);
   }
 
   @override
-  Future<FutureOr> onError(DioError dioError) async {
-    print(
-        "<-- ${dioError.message} ${(dioError.response?.request != null ? (dioError.response.request.path) : 'URL')}");
-    print(
-        "${dioError.response != null ? dioError.response.data : 'Unknown Error'}");
-    print("<-- End error");
-  }
-
-  @override
-  Future<FutureOr> onResponse(Response response) async {
-    print(
-        "<-- ${response.statusCode} ${(response.request != null ? (response.request.path) : 'URL')}");
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    print("<-- ${response.statusCode} ${response.requestOptions.path}");
     print("Headers:");
-    response.headers?.forEach((k, v) => print('$k: $v'));
+    response.headers.forEach((k, v) => print('$k: $v'));
     print("Response: ${response.data}");
     print("<-- END HTTP");
+    return super.onResponse(response, handler);
   }
 }

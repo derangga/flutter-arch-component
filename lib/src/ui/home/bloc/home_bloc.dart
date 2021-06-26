@@ -7,31 +7,26 @@ import '../../../common/data/local/db/database_module.dart';
 import '../../../common/domain/repository/movie_repository.dart';
 
 part 'home_state.dart';
+
 part 'home_event.dart';
 
 class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
-  final MovieRepository _repos;
+  late final MovieRepository _repos;
   bool isOnProcess = false;
 
-  HomeBloc(this._repos);
+  HomeBloc(this._repos) : super(LoadingState());
 
   @override
-  void mapEventToState(HomeEvent event) {
-    if (event is GetDiscoverMovieEvent && !isOnProcess) {
-      isOnProcess = true;
-      _getDiscover();
+  Stream<HomeState> mapEventToState(HomeEvent event) async* {
+    if (event is GetDiscoverMovieEvent) {
+      yield* _repos.singleSourceOfTruth<HomeState>(1,
+          (movies) async* {
+            yield SuccessGetDiscoverState(movies);
+          },
+          (message, movies) async* {
+            yield FailedGetDiscoverState(message, movies);
+          });
     }
   }
 
-  void _getDiscover() async {
-    await _repos.singleSourceOfTruth(
-        page: 1,
-        onSuccess: (movieList) {
-          emitState(SuccessGetDiscoverState(movieList));
-        },
-        onError: (message, movieList) {
-          emitState(FailedGetDiscoverState(message, movieList));
-        });
-    isOnProcess = false;
-  }
 }

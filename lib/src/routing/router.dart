@@ -15,7 +15,7 @@ class RoutingApp {
         );
 
       case Routing.DETAIL_MOVIE:
-        Movie movie = settings.arguments as Movie;
+        Movie? movie = settings.arguments as Movie;
         return MaterialPageRoute(
             builder: (_) => DetailMovieScreen(movie));
 

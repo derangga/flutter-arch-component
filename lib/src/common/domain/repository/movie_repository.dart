@@ -2,8 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../../data/local/db/database_module.dart';
 
 abstract class MovieRepository {
-  Future<void> singleSourceOfTruth(
-      {@required int page,
-      Function(List<Movie> movieList) onSuccess,
-      Function(String message, List<Movie> movieList) onError});
+  Stream<S> singleSourceOfTruth<S>(int page,
+      Stream<S> Function(List<Movie> movieList) onSuccess,
+      Stream<S> Function(String message, List<Movie> movieList) onError);
 }

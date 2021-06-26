@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_arch_component/src/routing/routing_constant.dart';
-import 'package:kiwi/kiwi.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'bloc/home_bloc.dart';
@@ -15,16 +15,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends BaseState<HomeBloc, HomeState, HomeScreen> {
-
   @override
-  HomeBloc initBloc() {
-    return KiwiContainer().resolve<HomeBloc>();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    bloc.pushEvent(GetDiscoverMovieEvent());
+  void setupOnInitState() {
+    bloc.add(GetDiscoverMovieEvent());
   }
 
   @override
@@ -46,14 +39,12 @@ class _HomeScreenState extends BaseState<HomeBloc, HomeState, HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home Screen')),
-      body: Container(
-        child: StreamBuilder<HomeState>(
-            stream: bloc.stateStream,
-            initialData: LoadingState(),
-            builder: (blocCtx, snapshot) => mapStateHandler(snapshot.data)),
-      ),
-    );
+        appBar: AppBar(title: Text('Home Screen')),
+        body: Container(
+          child: BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) => mapStateHandler(state),
+          ),
+        ));
   }
 
   Widget _loadingView(BuildContext context) {
@@ -64,8 +55,8 @@ class _HomeScreenState extends BaseState<HomeBloc, HomeState, HomeScreen> {
       height: size.height,
       padding: EdgeInsets.only(top: 12, left: 12, right: 12),
       child: Shimmer.fromColors(
-        baseColor: Colors.grey[300],
-        highlightColor: Colors.grey[100],
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
         enabled: true,
         child: ListView.builder(
             itemCount: item,
@@ -97,7 +88,7 @@ class _HomeScreenState extends BaseState<HomeBloc, HomeState, HomeScreen> {
     Size _size = MediaQuery.of(context).size;
     return ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 8),
-        itemCount: movies.length ?? 0,
+        itemCount: movies.length,
         itemBuilder: (ctx, pos) {
           Movie movie = movies[pos];
           return Padding(

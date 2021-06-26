@@ -4,6 +4,6 @@ part of 'detail_movie_bloc.dart';
 abstract class DetailMovieEvent extends BlocEvent{}
 
 class GetDetailMovieEvent extends DetailMovieEvent {
-  final int movieId;
+  final int? movieId;
   GetDetailMovieEvent(this.movieId);
 }

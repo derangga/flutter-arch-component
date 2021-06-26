@@ -1,8 +1,8 @@
 class MovieResponse {
-  int page;
-  int totalResults;
-  int totalPages;
-  List<Movies> moviesList;
+  int? page;
+  int? totalResults;
+  int? totalPages;
+  List<Movies>? moviesList;
 
   MovieResponse(
       {this.page, this.totalResults, this.totalPages, this.moviesList});
@@ -12,22 +12,22 @@ class MovieResponse {
     totalResults = json['total_results'];
     totalPages = json['total_pages'];
     if (json['results'] != null) {
-      moviesList = new List<Movies>();
+      moviesList = [];
       json['results'].forEach((v) {
-        moviesList.add(new Movies.fromJson(v));
+        moviesList!.add(new Movies.fromJson(v));
       });
     }
   }
 }
 
 class Movies {
-  int voteCount;
-  int id;
-  String title;
-  String posterPath;
-  String backdropPath;
-  String overview;
-  String releaseDate;
+  int? voteCount;
+  int? id;
+  String? title;
+  String? posterPath;
+  String? backdropPath;
+  String? overview;
+  String? releaseDate;
 
   Movies(
       {this.voteCount,

@@ -2,27 +2,22 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_arch_component/src/base/bloc_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'base_bloc.dart';
-
-abstract class BaseState<B extends BaseBloc, BS extends BlocState,
+abstract class BaseState<B extends BlocBase, BS extends BlocState,
     S extends StatefulWidget> extends State<S> {
-  B bloc;
+  late B bloc;
 
-  B initBloc();
   Widget mapStateHandler(BS state);
+
+  void setupOnInitState();
 
   @override
   void initState() {
-    bloc = initBloc();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    bloc.dispose();
-    super.dispose();
+    bloc = BlocProvider.of<B>(context);
+    setupOnInitState();
   }
 
   void setLog(String message) {
@@ -36,6 +31,6 @@ abstract class BaseState<B extends BaseBloc, BS extends BlocState,
   }
 
   void executeUiAfterBuild(FrameCallback frameCallback) {
-    WidgetsBinding.instance.addPostFrameCallback(frameCallback);
+    WidgetsBinding.instance!.addPostFrameCallback(frameCallback);
   }
 }
