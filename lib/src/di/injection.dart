@@ -18,6 +18,7 @@ import '../ui/detail/bloc/detail_movie_bloc.dart';
 part 'injection.g.dart';
 
 abstract class Injection {
+  @Register.singleton(DioOptions, name: "DioOptions")
   @Register.singleton(Interceptor,
       from: LoggingInterceptor, name: "Interceptor")
   @Register.singleton(DefaultHttpClientAdapter,
@@ -25,6 +26,7 @@ abstract class Injection {
   @Register.singleton(Dio,
       from: DioModule,
       resolvers: {
+        DioOptions: "DioOptions",
         Interceptor: "Interceptor",
         DefaultHttpClientAdapter: "DefaultHttpClientAdapter"
       },

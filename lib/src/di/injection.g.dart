@@ -10,12 +10,13 @@ class _$Injection extends Injection {
   @override
   void configure() {
     final KiwiContainer container = KiwiContainer();
+    container.registerSingleton((c) => DioOptions(), name: 'DioOptions');
     container.registerSingleton<Interceptor>((c) => LoggingInterceptor(),
         name: 'Interceptor');
     container.registerSingleton((c) => DefaultHttpClientAdapter(),
         name: 'DefaultHttpClientAdapter');
     container.registerSingleton<Dio>(
-        (c) => DioModule(c<Interceptor>('Interceptor'),
+        (c) => DioModule(c<BaseOptions>(), c<Interceptor>('Interceptor'),
             c<DefaultHttpClientAdapter>('DefaultHttpClientAdapter')),
         name: 'Dio');
     container.registerSingleton((c) => AppDatabase(), name: 'AppDatabase');
