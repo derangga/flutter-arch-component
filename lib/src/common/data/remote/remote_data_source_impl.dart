@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/src/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_arch_component/src/common/data/remote/base_remote.dart';
 import 'package:flutter_arch_component/src/common/data/remote/remote_data_source.dart';
 import 'package:flutter_arch_component/src/common/domain/models/remote/detail_movie_response.dart';

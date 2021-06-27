@@ -10,16 +10,23 @@ class _$Injection extends Injection {
   @override
   void configure() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton((c) => DioOptions(), name: 'DioOptions');
+    container.registerSingleton<BaseOptions>((c) => DioOptions(),
+        name: 'DioOptions');
     container.registerSingleton<Interceptor>((c) => LoggingInterceptor(),
         name: 'Interceptor');
     container.registerSingleton((c) => DefaultHttpClientAdapter(),
         name: 'DefaultHttpClientAdapter');
     container.registerSingleton<Dio>(
-        (c) => DioModule(c<BaseOptions>(), c<Interceptor>('Interceptor'),
+        (c) => DioModule(
+            c<BaseOptions>('DioOptions'),
+            c<Interceptor>('Interceptor'),
             c<DefaultHttpClientAdapter>('DefaultHttpClientAdapter')),
         name: 'Dio');
-    container.registerSingleton((c) => AppDatabase(), name: 'AppDatabase');
+    container.registerSingleton<QueryExecutor>((c) => DatabaseExecutor(),
+        name: 'QueryExecutor');
+    container.registerSingleton(
+        (c) => AppDatabase(c<QueryExecutor>('QueryExecutor')),
+        name: 'AppDatabase');
     container.registerSingleton((c) => MoviesDao(c<AppDatabase>('AppDatabase')),
         name: 'MoviesDao');
     container.registerSingleton<RemoteDataSource>(

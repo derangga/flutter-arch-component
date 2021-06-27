@@ -27,3 +27,10 @@ extension StringExtension on String? {
     return double?.tryParse(this.orEmpty());
   }
 }
+
+extension ListExtension<E> on List<E>? {
+  /// Returns this List if it's not `null` and the empty list otherwise.
+  List<E> orEmpty() {
+    return this ?? [];
+  }
+}

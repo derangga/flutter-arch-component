@@ -14,14 +14,16 @@ class MovieRepositoryImpl implements MovieRepository {
   Stream<S> singleSourceOfTruth<S>(
       int page,
       Stream<S> Function(List<Movie> movieList) onSuccess,
-      Stream<S> Function(String message, List<Movie> movieList) onError) async* {
+      Stream<S> Function(String message, List<Movie> movieList)
+          onError) async* {
     var movies = await _localSource.getAllMovie();
     yield* onSuccess.call(movies);
 
     final result = await _remoteSource.fetchDiscoverMovies(page);
 
     yield* result.fold((failure) async* {
-      yield* onError.call("Error : ${failure.code} ==> ${failure.errorBody}", movies);
+      yield* onError.call(
+          "Error : ${failure.code} ==> ${failure.errorBody}", movies);
     }, (success) async* {
       await _localSource.deleteAllMovie();
       movies = success.moviesList!.map((element) {
