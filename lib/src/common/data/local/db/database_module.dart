@@ -6,9 +6,7 @@ part 'database_module.g.dart';
 
 @UseMoor(tables: [Movies], daos: [MoviesDao])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase()
-      : super(FlutterQueryExecutor.inDatabaseFolder(
-            path: 'db.sqlite', logStatements: true));
+  AppDatabase(QueryExecutor e) : super(e);
 
   @override
   int get schemaVersion => 1;

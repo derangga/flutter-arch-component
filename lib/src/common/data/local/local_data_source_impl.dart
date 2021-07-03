@@ -8,13 +8,13 @@ class LocalDataSourceImpl implements LocalDataSource {
   LocalDataSourceImpl(this._moviesDao);
 
   @override
-  Future<void> insertMovie(MoviesCompanion movie) async {
-    await _moviesDao.insertMovie(movie);
+  Future<int> insertMovie(MoviesCompanion movie) async {
+    return await _moviesDao.insertMovie(movie);
   }
 
   @override
-  Future<void> deleteAllMovie() async {
-    await _moviesDao.deleteAllMovie();
+  Future<int> deleteAllMovie() async {
+    return await _moviesDao.deleteAllMovie();
   }
 
   @override

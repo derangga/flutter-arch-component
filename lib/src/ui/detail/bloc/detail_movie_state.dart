@@ -3,10 +3,10 @@ part of 'detail_movie_bloc.dart';
 @immutable
 abstract class DetailMovieState extends BlocState {}
 
-class LoadingViewState extends DetailMovieState{}
+class LoadingViewState extends DetailMovieState {}
 
 class SuccessGetDetailMovieState extends DetailMovieState {
-  final DetailMovieResponse detailMovie;
+  final DetailMovie detailMovie;
   SuccessGetDetailMovieState(this.detailMovie);
 }
 

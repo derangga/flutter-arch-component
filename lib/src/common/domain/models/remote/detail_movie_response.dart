@@ -29,3 +29,25 @@ class DetailMovieResponse {
     voteAverage = json['vote_average'];
   }
 }
+
+class DetailMovie {
+  late String backdropPath;
+  late String title;
+  late String overview;
+  late String posterPath;
+  late String releaseDate;
+  late String status;
+  late double voteAverage;
+  late int voteCount;
+
+  DetailMovie(
+    this.backdropPath,
+    this.title,
+    this.overview,
+    this.posterPath,
+    this.releaseDate,
+    this.status,
+    this.voteAverage,
+    this.voteCount,
+  );
+}

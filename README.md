@@ -10,12 +10,20 @@ An example Flutter clean architecture component based on [Android Architecture C
 - [Dio](https://pub.dev/packages/dio) for network services.
 - [Moor](https://pub.dev/packages/moor) for persistance data.
 - [Kiwi](https://pub.dev/packages/kiwi) for dependency injection
-- [BLoC from Scratch](https://www.youtube.com/watch?v=oxeYeMHVLII&ab_channel=ResoCoder)
+- [Flutter BLoC](https://pub.dev/packages/flutter_bloc)
 
-# Branch
-This example contains 2 branch :
-- master : is an example flutter clean architecture
-- modularization : is an example implementation modularization in flutter with clean architecture.
+# Test
+Before you running the unit test there is some prerequirement for SqlLite :
+
+- For Linux, you should make sure, sqlite dev lib installed on your system. For example, there are packages for ubuntu.
+```
+% sudo apt-get install sqlite3 libsqlite3-dev
+```
+- For Mac, user can install with brew.
+```
+% brew install sqlite3 
+```
+- For Windows, user can download dll from [SQLite](https://www.sqlite.org/download.html)
 
 
 # Article

@@ -168,15 +168,14 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
     this.releaseDate = const Value.absent(),
   });
   MoviesCompanion.insert({
-    required int movieId,
+    this.movieId = const Value.absent(),
     required int voteCount,
     required String title,
     required String posterPath,
     required String backdropPath,
     required String overview,
     required String releaseDate,
-  })  : movieId = Value(movieId),
-        voteCount = Value(voteCount),
+  })  : voteCount = Value(voteCount),
         title = Value(title),
         posterPath = Value(posterPath),
         backdropPath = Value(backdropPath),
@@ -370,8 +369,6 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
     if (data.containsKey('movie_id')) {
       context.handle(_movieIdMeta,
           movieId.isAcceptableOrUnknown(data['movie_id']!, _movieIdMeta));
-    } else if (isInserting) {
-      context.missing(_movieIdMeta);
     }
     if (data.containsKey('vote_count')) {
       context.handle(_voteCountMeta,
@@ -419,7 +416,7 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => <GeneratedColumn>{};
+  Set<GeneratedColumn> get $primaryKey => {movieId};
   @override
   Movie map(Map<String, dynamic> data, {String? tablePrefix}) {
     return Movie.fromData(data, _db,

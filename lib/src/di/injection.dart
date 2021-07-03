@@ -1,9 +1,11 @@
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_arch_component/src/common/data/local/db/database_executor.dart';
 import 'package:flutter_arch_component/src/common/data/local/local_data_source_impl.dart';
 import 'package:flutter_arch_component/src/common/data/remote/config/logging_interceptor.dart';
 import 'package:flutter_arch_component/src/common/data/remote/remote_data_source_impl.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:moor_flutter/moor_flutter.dart';
 
 import '../common/data/local/db/database_module.dart';
 import '../common/data/local/db/movie_dao.dart';
@@ -18,7 +20,7 @@ import '../ui/detail/bloc/detail_movie_bloc.dart';
 part 'injection.g.dart';
 
 abstract class Injection {
-  @Register.singleton(DioOptions, name: "DioOptions")
+  @Register.singleton(BaseOptions, from: DioOptions, name: "DioOptions")
   @Register.singleton(Interceptor,
       from: LoggingInterceptor, name: "Interceptor")
   @Register.singleton(DefaultHttpClientAdapter,
@@ -26,18 +28,25 @@ abstract class Injection {
   @Register.singleton(Dio,
       from: DioModule,
       resolvers: {
-        DioOptions: "DioOptions",
+        BaseOptions: "DioOptions",
         Interceptor: "Interceptor",
         DefaultHttpClientAdapter: "DefaultHttpClientAdapter"
       },
       name: "Dio")
-  @Register.singleton(AppDatabase, name: "AppDatabase")
+  @Register.singleton(QueryExecutor,
+      from: DatabaseExecutor, name: 'QueryExecutor')
+  @Register.singleton(AppDatabase,
+      resolvers: {QueryExecutor: "QueryExecutor"}, name: "AppDatabase")
   @Register.singleton(MoviesDao,
       resolvers: {AppDatabase: "AppDatabase"}, name: "MoviesDao")
-  @Register.singleton(RemoteDataSource, from: RemoteDataSourceImpl,
-      resolvers: {Dio: "Dio"}, name: "RemoteDataSource")
-  @Register.singleton(LocalDataSource, from: LocalDataSourceImpl,
-      resolvers: {MoviesDao: "MoviesDao"}, name: "LocalDataSource")
+  @Register.singleton(RemoteDataSource,
+      from: RemoteDataSourceImpl,
+      resolvers: {Dio: "Dio"},
+      name: "RemoteDataSource")
+  @Register.singleton(LocalDataSource,
+      from: LocalDataSourceImpl,
+      resolvers: {MoviesDao: "MoviesDao"},
+      name: "LocalDataSource")
   @Register.singleton(MovieRepository,
       from: MovieRepositoryImpl,
       resolvers: {
@@ -47,7 +56,7 @@ abstract class Injection {
       name: "MovieRepository")
   @Register.factory(HomeBloc, resolvers: {MovieRepository: "MovieRepository"})
   @Register.factory(DetailMovieBloc,
-      resolvers: {RemoteDataSource: "RemoteDataSource"})
+      resolvers: {MovieRepository: "MovieRepository"})
   void configure();
 }
 

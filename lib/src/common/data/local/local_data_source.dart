@@ -1,10 +1,9 @@
 import 'db/database_module.dart';
 
 abstract class LocalDataSource {
+  Future<int> insertMovie(MoviesCompanion movie);
 
-  Future<void> insertMovie(MoviesCompanion movie);
-
-  Future<void> deleteAllMovie();
+  Future<int> deleteAllMovie();
 
   Future<List<Movie>> getAllMovie();
 }

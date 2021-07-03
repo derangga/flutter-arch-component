@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/src/dio.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_arch_component/src/common/data/remote/base_remote.dart';
 import 'package:flutter_arch_component/src/common/data/remote/remote_data_source.dart';
 import 'package:flutter_arch_component/src/common/domain/models/remote/detail_movie_response.dart';
@@ -26,7 +26,7 @@ class RemoteDataSourceImpl extends BaseRemote implements RemoteDataSource {
 
   @override
   Future<Either<Failure, DetailMovieResponse>> fetchDetailMovies(
-      int? movieId) async {
+      int movieId) async {
     String url = "${ApiUrl.DETAIL_MOVIES}$movieId?api_key=${ApiUrl.TOKEN}";
     final result = await get(url,
         converter: (response) => DetailMovieResponse.fromJson(response));
