@@ -13,7 +13,7 @@ An example Flutter clean architecture component based on [Android Architecture C
 - [Flutter BLoC](https://pub.dev/packages/flutter_bloc)
 
 # Test
-Before you running the unit test there is some prerequirement for SqlLite :
+Before you running the unit test there is some prerequirement for SqlLite, read this [docs](https://pub.dev/documentation/dart_sqlite3/latest/)
 
 - For Linux, you should make sure, sqlite dev lib installed on your system. For example, there are packages for ubuntu.
 ```

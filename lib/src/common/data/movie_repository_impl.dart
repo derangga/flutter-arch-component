@@ -35,7 +35,7 @@ class MovieRepositoryImpl implements MovieRepository {
           "Error : ${failure.code} ==> ${failure.errorBody}", movies);
     }, (success) async* {
       await _localSource.deleteAllMovie();
-      movies = success.moviesList!.map((element) {
+      movies = success.moviesList.orEmpty().map((element) {
         Movie movie = Movie(
             movieId: element.id.orZero(),
             voteCount: element.voteCount.orZero(),
