@@ -42,6 +42,6 @@ class _$Injection extends Injection {
     container.registerFactory(
         (c) => HomeBloc(c<MovieRepository>('MovieRepository')));
     container.registerFactory(
-        (c) => DetailMovieBloc(c<RemoteDataSource>('RemoteDataSource')));
+        (c) => DetailMovieBloc(c<MovieRepository>('MovieRepository')));
   }
 }

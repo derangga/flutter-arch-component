@@ -56,7 +56,7 @@ abstract class Injection {
       name: "MovieRepository")
   @Register.factory(HomeBloc, resolvers: {MovieRepository: "MovieRepository"})
   @Register.factory(DetailMovieBloc,
-      resolvers: {RemoteDataSource: "RemoteDataSource"})
+      resolvers: {MovieRepository: "MovieRepository"})
   void configure();
 }
 

@@ -19,14 +19,12 @@ class HomeBloc extends BaseBloc<HomeEvent, HomeState> {
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     if (event is GetDiscoverMovieEvent) {
-      yield* _repos.singleSourceOfTruth<HomeState>(1,
-          (movies) async* {
-            yield SuccessGetDiscoverState(movies);
-          },
-          (message, movies) async* {
-            yield FailedGetDiscoverState(message, movies);
-          });
+      yield LoadingState();
+      yield* _repos.singleSourceOfTruth<HomeState>(1, (movies) async* {
+        yield SuccessGetDiscoverState(movies);
+      }, (message, movies) async* {
+        yield FailedGetDiscoverState(message, movies);
+      });
     }
   }
-
 }

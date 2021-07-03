@@ -26,7 +26,7 @@ class RemoteDataSourceImpl extends BaseRemote implements RemoteDataSource {
 
   @override
   Future<Either<Failure, DetailMovieResponse>> fetchDetailMovies(
-      int? movieId) async {
+      int movieId) async {
     String url = "${ApiUrl.DETAIL_MOVIES}$movieId?api_key=${ApiUrl.TOKEN}";
     final result = await get(url,
         converter: (response) => DetailMovieResponse.fromJson(response));

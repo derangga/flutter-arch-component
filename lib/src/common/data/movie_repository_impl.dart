@@ -1,3 +1,9 @@
+import 'package:flutter_arch_component/src/common/domain/models/remote/detail_movie_response.dart';
+
+import 'package:flutter_arch_component/src/common/data/remote/failure.dart';
+
+import 'package:dartz/dartz.dart';
+
 import 'local/db/database_module.dart';
 import '../../common/data/local/local_data_source.dart';
 import '../../common/data/remote/remote_data_source.dart';
@@ -17,7 +23,10 @@ class MovieRepositoryImpl implements MovieRepository {
       Stream<S> Function(String message, List<Movie> movieList)
           onError) async* {
     var movies = await _localSource.getAllMovie();
-    yield* onSuccess.call(movies);
+
+    if (movies.isNotEmpty) {
+      yield* onSuccess.call(movies);
+    }
 
     final result = await _remoteSource.fetchDiscoverMovies(page);
 
@@ -39,6 +48,23 @@ class MovieRepositoryImpl implements MovieRepository {
         return movie;
       }).toList();
       yield* onSuccess.call(movies);
+    });
+  }
+
+  @override
+  Future<Either<Failure, DetailMovie>> fetchDetailMovies(int movieId) async {
+    var response = await _remoteSource.fetchDetailMovies(movieId);
+    return response.fold((failure) => Left(failure), (success) {
+      DetailMovie detailMovie = DetailMovie(
+          success.backdropPath.orEmpty(),
+          success.title.orEmpty(),
+          success.overview.orEmpty(),
+          success.posterPath.orEmpty(),
+          success.releaseDate.orEmpty(),
+          success.status.orEmpty(),
+          success.voteAverage.orZero(),
+          success.voteCount.orZero());
+      return Right(detailMovie);
     });
   }
 }

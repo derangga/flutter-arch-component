@@ -19,7 +19,6 @@ class DetailMovieScreen extends StatefulWidget {
 
 class _DetailMovieScreenState
     extends BaseState<DetailMovieBloc, DetailMovieState, DetailMovieScreen> {
-
   @override
   void setupOnInitState() {
     bloc.add(GetDetailMovieEvent(widget.movie.movieId));
@@ -39,12 +38,12 @@ class _DetailMovieScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.movie.title),
-        ),
-        body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
-          builder: (context, state) => mapStateHandler(state),
-        ),
+      appBar: AppBar(
+        title: Text(widget.movie.title),
+      ),
+      body: BlocBuilder<DetailMovieBloc, DetailMovieState>(
+        builder: (context, state) => mapStateHandler(state),
+      ),
     );
   }
 
@@ -74,7 +73,7 @@ class _DetailMovieScreenState
     );
   }
 
-  Widget _detailMovieView(DetailMovieResponse movie) {
+  Widget _detailMovieView(DetailMovie movie) {
     Size size = MediaQuery.of(context).size;
     return Container(
       child: Column(
@@ -92,7 +91,7 @@ class _DetailMovieScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  movie.title!,
+                  movie.title,
                   style: TextStyle(
                     color: Colors.blue,
                     fontSize: 16.0,
@@ -100,7 +99,7 @@ class _DetailMovieScreenState
                   ),
                 ),
                 SizedBox(height: 12),
-                Text(movie.overview!),
+                Text(movie.overview),
                 SizedBox(height: 12),
                 Text('Date Release: ${movie.releaseDate}')
               ],
