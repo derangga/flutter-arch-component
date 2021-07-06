@@ -23,7 +23,7 @@ void main() {
   });
 
   group("test fetchDiscoverMovies", () {
-    test("test fetchDiscoverMovies and result is success", () async {
+    test("test fetchDiscoverMovies and result is 200", () async {
       final responseJson = readJsonFromFile('discover_movie.json');
       final httpResponse =
           ResponseBody.fromString(responseJson, HttpStatus.ok, headers: {
@@ -38,8 +38,7 @@ void main() {
       expect(response.isRight(), true);
     });
 
-    test("test fetchDiscoverMovies and result is internal server error",
-        () async {
+    test("test fetchDiscoverMovies and result is 500", () async {
       final errorJson = jsonEncode({"message": "internal server error"});
       final httpResponse = ResponseBody.fromString(
           errorJson, HttpStatus.internalServerError,
@@ -57,7 +56,7 @@ void main() {
   });
 
   group("test fetchDetailMovies", () {
-    test("test fetchDetailMovies nad result is success", () async {
+    test("test fetchDetailMovies nad result is 200", () async {
       final responseJson = readJsonFromFile('detail_movie.json');
       final httpResponse =
           ResponseBody.fromString(responseJson, HttpStatus.ok, headers: {
@@ -72,8 +71,7 @@ void main() {
       expect(response.isRight(), true);
     });
 
-    test("test fetchDiscoverMovies and result is internal server error",
-        () async {
+    test("test fetchDiscoverMovies and result is 500", () async {
       final errorJson = jsonEncode({"message": "internal server error"});
       final httpResponse = ResponseBody.fromString(
           errorJson, HttpStatus.internalServerError,

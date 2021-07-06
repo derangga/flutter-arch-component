@@ -28,15 +28,6 @@ void main() {
   test("test insert movie into database", () async {
     // when
     await dao.insertMovie(dummyData.toCompanion(false));
-    final movies = await dao.getAllMovie();
-
-    // then
-    expect(movies.length, 1);
-  });
-
-  test("test insert movie into database", () async {
-    // when
-    await dao.insertMovie(dummyData.toCompanion(false));
     final movies = await dao.findMovie(dummyData.movieId);
 
     // then
@@ -63,6 +54,7 @@ void main() {
   });
 
   test("test delete 1 row movie", () async {
+    // given
     var secondMovie = dummyData.copyWith(movieId: 2, title: "Naruto");
     await dao.insertMovie(dummyData.toCompanion(false));
     await dao.insertMovie(secondMovie.toCompanion(false));
@@ -79,6 +71,7 @@ void main() {
   });
 
   test("test delete all row movie", () async {
+    // given
     var secondMovie = dummyData.copyWith(movieId: 2, title: "Naruto");
     await dao.insertMovie(dummyData.toCompanion(false));
     await dao.insertMovie(secondMovie.toCompanion(false));
